@@ -1,36 +1,24 @@
 from tkinter import *
 from tkinter import ttk
+from PIL import Image, ImageTk
 
 def main(self) -> None:
   self.title("Bomodoro prototype")
   self.attributes('-topmost', True)
+  self.geometry("340x340")
   # self.overrideredirect(True)
 
   frame = ttk.Frame(self, padding="5")
-  img_frame = ttk.Frame(frame, borderwidth=10, relief="ridge", width=200, height=100)
-  # img = ttk.Label(img_frame, text="img").grid(column=0, row=0)
+  # img_frame = ttk.Frame(frame, borderwidth=10, relief="ridge", width=200, height=100)
 
-  # recreation = StringVar()
-  # rct_entry = ttk.Entry(frame, width=10, textvariable=recreation)
-  # rct_entry.grid(column=0, row=1)
+  photo2 = Image.open("./bomodoro.png")
+  resized_image = photo2.resize((340,340))
+  converted_image= ImageTk.PhotoImage(resized_image)
 
-  # ttk.Label(frame, text="Recreation").grid(column=1, row=1)
-  
-  # for child in frame.winfo_children():
-  #   child.grid_configure(padx=5, pady=5)
-  
-  frame.grid(column=0, row=0, sticky=(N, S, E, W))
-  img_frame.grid(column=0, row=0, columnspan=3, rowspan=2, sticky=(N, S, E, W))
+  label = ttk.Label(self, image= converted_image)
+  label.pack()
 
-  root.columnconfigure(0, minsize=100, weight=1)
-  root.rowconfigure(0, minsize=200, weight=1)
-  frame.columnconfigure(0, weight=4)
-  frame.rowconfigure(1, weight=1)
-
-  # rct_entry.focus()
   self.mainloop()
-
-  return 0
 
 
 if __name__ == "__main__":
@@ -40,3 +28,4 @@ if __name__ == "__main__":
 
   main(root)
   
+
