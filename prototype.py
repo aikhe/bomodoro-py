@@ -1,4 +1,4 @@
-from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
@@ -22,7 +22,7 @@ def main(self) -> None:
 
 
 if __name__ == "__main__":
-  root = Tk()
+  root = tk.Tk()
   root.columnconfigure(1, minsize=100, weight=1)
   root.rowconfigure(1, minsize=200, weight=1)
 
