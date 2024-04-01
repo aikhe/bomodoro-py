@@ -6,6 +6,9 @@ def main(self) -> None:
   self.title("Bomodoro prototype")
   self.attributes('-topmost', True)
   self.geometry("340x340")
+  self.wait_visibility(root)
+  self.wm_attributes('-alpha',0.3)
+  # self.wm_attributes('-transparentcolor','#f0f0f0')
   # self.overrideredirect(True)
 
   frame = ttk.Frame(self, padding="5")
@@ -28,4 +31,3 @@ if __name__ == "__main__":
 
   main(root)
   
-
