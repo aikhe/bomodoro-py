@@ -1,15 +1,15 @@
-from tkinter import Tk, Frame, Label
+from tkinter import *
 
 root = Tk()
 root.overrideredirect(True)  # Removes window decorations
+root.geometry('500x250')
 root.wait_visibility(root)
-root.wm_attributes('-alpha', 0.3)
+root.wm_attributes('-transparentcolor', 'red')
 
-frame = Frame(root, bg="white")  # Create a frame to hold your widgets
+frame = Frame(root, bg="red")  # Create a frame to hold your widgets
 frame.pack(fill="both", expand=True)
 
 # Add your widgets to the frame here
-label = Label(frame, text="Unaffected Frame")
-label.pack()
 
 root.mainloop()
+
