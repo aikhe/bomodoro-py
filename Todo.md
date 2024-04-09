@@ -11,4 +11,12 @@
 
 04-07
 
-- [ ]
+- [x] Pywin32 transparency
+
+04-08
+
+- [ ] Rework explosion sprite
+
+04-09
+
+- [ ] 
