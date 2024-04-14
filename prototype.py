@@ -46,7 +46,7 @@ class Bomb:
             self.frm_index += 1
 
             frame_label.configure(image=self.explosion_frames[self.frm_index])
-            frame_label.after(43, self.animate_explosion)
+            frame_label.after(28, self.animate_explosion)
 
             if self.frm_index == self.animation_len:
                 self.parent.destroy()
@@ -57,9 +57,9 @@ def main(**kwargs) -> None:
 
     px = kwargs.get("screen_size")
     parent.overrideredirect(True)
-    parent.attributes('-topmost', True)
-    parent.config('bg=white')
-    parent.geometry(f"{px[0]}x{px[1]}+340+1")
+    # parent.attributes('-topmost', True)
+    # parent.config('bg=white')
+    # parent.geometry(f"{px[0]}x{px[1]}+340+1")
     # parent.wm_attributes("-transparentcolor", "white")
 
     Bomb(parent, kwargs.get("frames_path"), px)
@@ -73,7 +73,8 @@ if __name__ == "__main__":
     root = ctk.CTk()
     root.title("Explosion Prototype")
 
-    resolution = (340, 340)
+    resolution = (700, 400)
     explosion_path = "./assets/explosion"
 
     main(master=root, frames_path=explosion_path, screen_size=resolution)
+

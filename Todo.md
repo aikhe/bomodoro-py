@@ -15,8 +15,17 @@
 
 04-08
 
-- [ ] Rework explosion sprite
+- [ ] 
 
 04-09
 
 - [ ] 
+
+04-10
+
+- [ ] 
+
+04-11
+
+- [ ] 
+- [ ] Rework explosion sprite
