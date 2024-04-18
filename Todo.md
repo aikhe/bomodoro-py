@@ -1,31 +1,27 @@
 # bomodoro-py
 
-04-05
+2024-04-05
 
 - [x] Autocompletion/Autoformatting neovim config
 - [x] Tkinter animation impented
 
-04-06
+2024-04-06
 
 - [x] Explosion sprite added
 
-04-07
+2024-04-07
 
 - [x] Pywin32 transparency
 
-04-08
+2024-04-09
 
-- [ ] 
+- [x] Todo
 
-04-09
+2024-04-14
 
-- [ ] 
+- [x] Fixed the explosion sprite
 
-04-10
+2024-04-18
 
-- [ ] 
-
-04-11
-
-- [ ] 
-- [ ] Rework explosion sprite
+- [x] Rework explosion sprite
+- [x] Explosion sprite finished

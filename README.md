@@ -4,4 +4,4 @@
 
 (but on python)
 
-![bomodoro](./images-10.jpeg)
+![bomodoro](./assets/tnt.png)
