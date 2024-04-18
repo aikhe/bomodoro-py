@@ -16,31 +16,32 @@ class Bomb:
 
         self.label = ctk.CTkLabel(self.parent, text="", fg_color="white")
         self.label.pack(expand=True, fill="both")
-
         self.animate_explosion()
+    
+    @classmethod
+    def initialize_gui(cls) -> None:
+        raise NotImplementedError("initialize_gui() is missing code")
 
-    def import_imgs(self, img_path) -> list:
-        img_paths = []
+    def import_imgs(self, img_path) -> list[str]:
+        img_paths= []
         for _, __, img_data in walk(img_path):
             sorted_data = sorted(
-                img_data, key=lambda item: int(item.split(".")[0][-3:])
+                img_data, key=lambda item: int(item.split(".")[0][-2:])
             )
             full_path_data = [img_path + "/" + i for i in sorted_data]
             for i in full_path_data:
                 img_paths.append(i)
 
-        ctk_imgs = []
+        ctk_imgs: list[str] = []
         for img in img_paths:
             frame = Image.open(img)
             resized_frm = frame.resize(self.screen_size)
             converted_frm = ImageTk.PhotoImage(resized_frm)
-
-            # ctk_img = ctk.CTkLabel(self.parent, text="", image=converted_frm)
             ctk_imgs.append(converted_frm)
 
         return ctk_imgs
 
-    def animate_explosion(self):
+    def animate_explosion(self) -> None:
         if self.frm_index < self.animation_len:
             frame_label = self.label
             self.frm_index += 1
@@ -57,10 +58,8 @@ def main(**kwargs) -> None:
 
     px = kwargs.get("screen_size")
     parent.overrideredirect(True)
-    # parent.attributes('-topmost', True)
-    # parent.config('bg=white')
-    # parent.geometry(f"{px[0]}x{px[1]}+340+1")
-    # parent.wm_attributes("-transparentcolor", "white")
+    parent.geometry(f"{px[0]}x{px[1]}-0-1")
+    parent.wm_attributes("-transparentcolor", "white", '-topmost', 1)
 
     Bomb(parent, kwargs.get("frames_path"), px)
 
@@ -73,8 +72,7 @@ if __name__ == "__main__":
     root = ctk.CTk()
     root.title("Explosion Prototype")
 
-    resolution = (700, 400)
+    resolution = (1600, 900)
     explosion_path = "./assets/explosion"
 
     main(master=root, frames_path=explosion_path, screen_size=resolution)
-

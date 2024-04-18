@@ -47,24 +47,24 @@ def consume_text():
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.geometry('1000x500')
+    root.geometry('1600x900')
     root.overrideredirect(True)
     root.config(bg='#000000')
-    root.attributes("-alpha", 1)
-    root.wm_attributes("-topmost", 1)
+    # root.attributes("-alpha", 1)
+    # root.wm_attributes("-topmost", 1)
     root.attributes('-transparentcolor', '#000000', '-topmost', 1)
     # root.resizable(False, False)
     set_clickthrough(root.winfo_id())
 
-    label = tk.Label(root, text="+", bg="white", fg="red", font=("Arial", 30), bd=0)
-    label.place(x=1920 / 2, y=1080 / 2)
+    label = tk.Label(root, text="+", bg="black", fg="red", font=("Arial", 30), bd=0)
+    label.place(x=1600 / 2, y=900 / 2)
 
-    photo2 = Image.open("assets/explosion/tile018.png")
-    resized_image = photo2.resize((340,340))
-    converted_image= ImageTk.PhotoImage(resized_image)
+    # photo2 = Image.open("assets/explosion/tile018.png")
+    # resized_image = photo2.resize((340,340))
+    # converted_image= ImageTk.PhotoImage(resized_image)
 
-    label = tk.Label(root, image= converted_image, bg="black")
-    label.pack()
+    # label = tk.Label(root, image= converted_image, bg="black")
+    # label.pack()
 
     console = tk.Text(root, state='disabled', width=50, height=10, bg="black", fg="red", bd=0)
     console.place(x=20, y=20)
