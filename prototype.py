@@ -2,6 +2,9 @@ from os import walk
 
 import customtkinter as ctk
 from PIL import Image, ImageTk
+from pygame import mixer
+import threading
+import time
 from rich import print as rprint
 
 
@@ -42,26 +45,32 @@ class Bomb:
 
         return ctk_imgs
     
-    def explode_win(self):
+    def explode_win(self) -> None:
         self.boom = ctk.CTkToplevel()
         self.boom.title("Explosion")
         self.boom.overrideredirect(True)
         screen_px = self.screen_size
-        self.boom.geometry(f"{screen_px[0]}x{screen_px[1]}-0-1")
+        self.boom.geometry(f"{screen_px[0]}x{screen_px[1]}-1-1")
         self.boom.wm_attributes("-transparentcolor", "white", '-topmost', 1)
 
         self.label = ctk.CTkLabel(self.boom, text="", fg_color="white")
         self.label.pack(expand=True, fill="both")
 
-        self.is_detonated = True
+        x = threading.Thread(target=self.animate_explosion)
+        y = threading.Thread(target=self.play_sound)
+        x.start()
+        y.start()
 
-        self.animate_explosion()
+    def play_sound(self) -> None:
+        mixer.init()
+        mixer.Sound('minecraft-tnt-explosion.mp3').play()
+        time.sleep(5)
+        mixer.quit()
 
     def animate_explosion(self) -> None:
         if self.frm_index < self.animation_len:
             frame_label = self.label
             self.frm_index += 1
-            rprint(self.frm_index)
 
             frame_label.configure(image=self.explosion_frames[self.frm_index])
             frame_label.after(28, self.animate_explosion)
@@ -71,7 +80,7 @@ class Bomb:
                 self.boom.destroy()
 
 
-def main(**kwargs) -> None:
+def main(**kwargs) -> int:
     menu_win = kwargs.get("menu_win")
     explode_win = kwargs.get("explode_win")
 
@@ -80,6 +89,8 @@ def main(**kwargs) -> None:
 
     instance = Bomb(explode_win, kwargs.get("frames_path"), screen_px)
     instance.initialize_gui(menu_win, menu_px)
+
+    return 0
 
 
 if __name__ == "__main__":
