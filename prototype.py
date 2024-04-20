@@ -11,16 +11,17 @@ class Bomb:
         self.screen_size = screen_size
 
         self.explosion_frames = self.import_imgs(img_path)
-        self.frm_index = 8
+        self.frm_index = 2
         self.animation_len = len(self.explosion_frames) - 1
 
-        self.label = ctk.CTkLabel(self.parent, text="", fg_color="white")
-        self.label.pack(expand=True, fill="both")
-        self.animate_explosion()
-    
-    @classmethod
-    def initialize_gui(cls) -> None:
-        raise NotImplementedError("initialize_gui() is missing code")
+    def initialize_gui(self, win, res) -> None:
+        # raise NotImplementedError("initialize_gui() is missing code")
+        win.geometry(f"{res[0]}x{res[1]}-0-1")
+
+        bttn = ctk.CTkButton(win, text="animate", command=lambda: self.explode_win())
+        bttn.pack(expand=True)
+
+        win.mainloop()
 
     def import_imgs(self, img_path) -> list[str]:
         img_paths= []
@@ -40,39 +41,56 @@ class Bomb:
             ctk_imgs.append(converted_frm)
 
         return ctk_imgs
+    
+    def explode_win(self):
+        self.boom = ctk.CTkToplevel()
+        self.boom.title("Explosion")
+        self.boom.overrideredirect(True)
+        screen_px = self.screen_size
+        self.boom.geometry(f"{screen_px[0]}x{screen_px[1]}-0-1")
+        self.boom.wm_attributes("-transparentcolor", "white", '-topmost', 1)
+
+        self.label = ctk.CTkLabel(self.boom, text="", fg_color="white")
+        self.label.pack(expand=True, fill="both")
+
+        self.is_detonated = True
+
+        self.animate_explosion()
 
     def animate_explosion(self) -> None:
         if self.frm_index < self.animation_len:
             frame_label = self.label
             self.frm_index += 1
+            rprint(self.frm_index)
 
             frame_label.configure(image=self.explosion_frames[self.frm_index])
             frame_label.after(28, self.animate_explosion)
 
-            if self.frm_index == self.animation_len:
-                self.parent.destroy()
+            if self.frm_index >= self.animation_len:
+                self.frm_index = 2
+                self.boom.destroy()
 
 
 def main(**kwargs) -> None:
-    parent = kwargs.get("master")
+    menu_win = kwargs.get("menu_win")
+    explode_win = kwargs.get("explode_win")
 
-    px = kwargs.get("screen_size")
-    parent.overrideredirect(True)
-    parent.geometry(f"{px[0]}x{px[1]}-0-1")
-    parent.wm_attributes("-transparentcolor", "white", '-topmost', 1)
+    menu_px = kwargs.get("menu_size")
+    screen_px = kwargs.get("screen_size")
 
-    Bomb(parent, kwargs.get("frames_path"), px)
-
-    parent.mainloop()
+    instance = Bomb(explode_win, kwargs.get("frames_path"), screen_px)
+    instance.initialize_gui(menu_win, menu_px)
 
 
 if __name__ == "__main__":
     ctk.set_appearance_mode("dark")
 
     root = ctk.CTk()
-    root.title("Explosion Prototype")
+    explode_win = "" # ctk.CTkToplevel()
+    root.title("Bomodoro alpha")
 
-    resolution = (1600, 900)
+    default_res = (1600, 900)
+    menu_res = (300, 400)
     explosion_path = "./assets/explosion"
 
-    main(master=root, frames_path=explosion_path, screen_size=resolution)
+    main(menu_win=root, menu_size=menu_res, explode_win=explode_win, frames_path=explosion_path, screen_size=default_res)
