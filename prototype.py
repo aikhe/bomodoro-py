@@ -18,11 +18,25 @@ class Bomb:
         self.animation_len = len(self.explosion_frames) - 1
 
     def initialize_gui(self, win, res) -> None:
-        # raise NotImplementedError("initialize_gui() is missing code")
         win.geometry(f"{res[0]}x{res[1]}-0-1")
 
-        bttn = ctk.CTkButton(win, text="animate", command=lambda: self.explode_win())
-        bttn.pack(expand=True)
+        bttn_frame = ctk.CTkFrame(win, border_width=2)
+        bttn_frame.place(relx=0.5, rely=0.5, anchor='center')
+
+        spacer0 = ctk.CTkLabel(bttn_frame, text="")
+        spacer0.grid(row=0, column=0)
+
+        timer = ctk.CTkButton(bttn_frame, text="timer", command=lambda: self.time_win())
+        timer.grid(row=1, column=0, padx=20)
+
+        spacer1 = ctk.CTkLabel(bttn_frame, text="")
+        spacer1.grid(row=2, column=0)
+
+        bttn = ctk.CTkButton(bttn_frame, text="animate", command=lambda: self.explode_win())
+        bttn.grid(row=3, column=0, padx=15)
+
+        spacer2 = ctk.CTkLabel(bttn_frame, text="")
+        spacer2.grid(row=4, column=0)
 
         win.mainloop()
 
@@ -44,6 +58,31 @@ class Bomb:
             ctk_imgs.append(converted_frm)
 
         return ctk_imgs
+    
+    def time_win(self) -> None:
+        # raise NotImplementedError("initialize_gui() is missing code")
+        timer = ctk.CTkToplevel()
+        timer.geometry("200x100-40-20")
+        timer.configure(fg_color='black')
+        timer.overrideredirect(True)
+        timer.attributes('-topmost', True)
+        timer.wm_attributes("-transparentcolor", "black", '-topmost', 1)
+
+        times = ctk.CTkLabel(timer, font=("", 34))
+        times.pack(expand=True)
+
+        def countdown(minutes):
+            seconds = minutes * 99
+            while seconds > 0:
+                mins, secs = divmod(seconds, 99)
+                times.configure(text='{:02d}:{:02d}'.format(mins, secs))
+                timer.update()
+                time.sleep(1)
+                seconds -= 1
+            timer.destroy()
+            self.explode_win()
+
+        countdown(99)
     
     def explode_win(self) -> None:
         self.boom = ctk.CTkToplevel()

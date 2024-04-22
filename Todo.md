@@ -24,4 +24,16 @@
 #### 2024-04-18
 
 - [x] Rework explosion sprite
+
+#### 2024-04-19
+
 - [x] Explosion sprite finished
+
+#### 2024-04-20
+
+- [x] Playing around with sololearn & freeCodeCamp
+
+#### 2024-04-21
+
+- [x] Menu functionality initial _(69th attempt)_
+- [x] Sound initial (pygame.mixer)
