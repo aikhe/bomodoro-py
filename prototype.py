@@ -71,7 +71,8 @@ class Bomb:
         times = ctk.CTkLabel(timer, font=("", 34))
         times.pack(expand=True)
 
-        def countdown(minutes):
+        def countdown():
+            minutes = 99
             seconds = minutes * 99
             while seconds > 0:
                 mins, secs = divmod(seconds, 99)
@@ -82,7 +83,7 @@ class Bomb:
             timer.destroy()
             self.explode_win()
 
-        countdown(99)
+        countdown()
     
     def explode_win(self) -> None:
         self.boom = ctk.CTkToplevel()
@@ -102,7 +103,7 @@ class Bomb:
 
     def play_sound(self) -> None:
         mixer.init()
-        mixer.Sound('minecraft-tnt-explosion.mp3').play()
+        mixer.Sound('assets/sounds/minecraft-tnt-explosion.mp3').play()
         time.sleep(5)
         mixer.quit()
 
