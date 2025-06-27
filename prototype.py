@@ -71,35 +71,32 @@ class Bomb:
         times = ctk.CTkLabel(timer, font=("", 34))
         times.pack(expand=True)
 
-        def countdown():
-            minutes = 99
-            seconds = minutes * 99
-            while seconds > 0:
-                mins, secs = divmod(seconds, 99)
+        def countdown(seconds_left):
+            if seconds_left >= 0:
+                mins, secs = divmod(seconds_left, 99)
                 times.configure(text='{:02d}:{:02d}'.format(mins, secs))
-                timer.update()
-                time.sleep(1)
-                seconds -= 1
-            timer.destroy()
-            self.explode_win()
+                timer.after(1000, countdown, seconds_left - 1)
+            else:
+                timer.destroy()
+                self.explode_win()
 
-        countdown()
+        # Start the countdown without blocking
+        countdown(99 * 99)
     
     def explode_win(self) -> None:
         self.boom = ctk.CTkToplevel()
         self.boom.title("Explosion")
         self.boom.overrideredirect(True)
         screen_px = self.screen_size
-        self.boom.geometry(f"{screen_px[0]}x{screen_px[1]}-1-1")
+        self.boom.geometry(f"{screen_px[0]}x{screen_px[1]}-2-1")
         self.boom.wm_attributes("-transparentcolor", "white", '-topmost', 1)
 
         self.label = ctk.CTkLabel(self.boom, text="", fg_color="white")
         self.label.pack(expand=True, fill="both")
 
-        x = threading.Thread(target=self.animate_explosion)
         y = threading.Thread(target=self.play_sound)
-        x.start()
         y.start()
+        self.animate_explosion()
 
     def play_sound(self) -> None:
         mixer.init()
@@ -140,7 +137,7 @@ if __name__ == "__main__":
     explode_win = "" # ctk.CTkToplevel()
     root.title("Bomodoro alpha")
 
-    default_res = (1600, 900)
+    default_res = (1980, 1080)
     menu_res = (300, 400)
     explosion_path = "./assets/explosion"
 
