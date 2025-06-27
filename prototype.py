@@ -62,9 +62,19 @@ class Bomb:
         return ctk_imgs
     
     def time_win(self) -> None:
-        # raise NotImplementedError("initialize_gui() is missing code")
         timer = ctk.CTkToplevel()
-        timer.geometry("170x80-40-20")
+        
+        timer_width = 170
+        timer_height = 80
+        screen_width = timer.winfo_screenwidth()
+        x = screen_width - timer_width + 45
+        y = 20
+
+        # Right timer
+        timer.geometry(f"{timer_width}x{timer_height}+{x}-{y}")
+        # Left timer
+        # timer.geometry(f"{timer_width}x{timer_height}-20-{y}") 
+
         timer.configure(fg_color='black')
         timer.overrideredirect(True)
         timer.attributes('-topmost', True)
