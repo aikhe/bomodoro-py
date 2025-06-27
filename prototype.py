@@ -20,23 +20,25 @@ class Bomb:
     def initialize_gui(self, win, res) -> None:
         win.geometry(f"{res[0]}x{res[1]}-0-1")
 
-        bttn_frame = ctk.CTkFrame(win, border_width=2)
+        bttn_frame = ctk.CTkFrame(win, border_width=0, fg_color="transparent")
         bttn_frame.place(relx=0.5, rely=0.5, anchor='center')
 
-        spacer0 = ctk.CTkLabel(bttn_frame, text="")
-        spacer0.grid(row=0, column=0)
+        # spacer0 = ctk.CTkLabel(bttn_frame, text="")
+        # spacer0.grid(row=0, column=0)
 
         timer = ctk.CTkButton(bttn_frame, text="timer", command=lambda: self.time_win())
-        timer.grid(row=1, column=0, padx=20)
+        timer.grid(row=0, column=0, padx=20)
 
-        spacer1 = ctk.CTkLabel(bttn_frame, text="")
-        spacer1.grid(row=2, column=0)
+        # spacer1 = ctk.CTkLabel(bttn_frame, text="")
+        # spacer1.grid(row=2, column=0)
 
-        bttn = ctk.CTkButton(bttn_frame, text="animate", command=lambda: self.explode_win())
-        bttn.grid(row=3, column=0, padx=15)
+        bomb = ctk.CTkButton(bttn_frame, text="animate", command=lambda: self.explode_win())
+        bomb.grid(row=3, column=0, padx=15)
 
-        spacer2 = ctk.CTkLabel(bttn_frame, text="")
-        spacer2.grid(row=4, column=0)
+        # spacer2 = ctk.CTkLabel(bttn_frame, text="")
+        # spacer2.grid(row=4, column=0)
+
+        bttn_frame.grid_rowconfigure(1, minsize=15)
 
         win.mainloop()
 
@@ -62,13 +64,13 @@ class Bomb:
     def time_win(self) -> None:
         # raise NotImplementedError("initialize_gui() is missing code")
         timer = ctk.CTkToplevel()
-        timer.geometry("200x100-40-20")
+        timer.geometry("170x80-40-20")
         timer.configure(fg_color='black')
         timer.overrideredirect(True)
         timer.attributes('-topmost', True)
         timer.wm_attributes("-transparentcolor", "black", '-topmost', 1)
 
-        times = ctk.CTkLabel(timer, font=("", 34))
+        times = ctk.CTkLabel(timer, font=("", 25))
         times.pack(expand=True)
 
         def countdown(seconds_left):
@@ -80,7 +82,6 @@ class Bomb:
                 timer.destroy()
                 self.explode_win()
 
-        # Start the countdown without blocking
         countdown(99 * 99)
     
     def explode_win(self) -> None:
@@ -138,7 +139,7 @@ if __name__ == "__main__":
     root.title("Bomodoro alpha")
 
     default_res = (1980, 1080)
-    menu_res = (300, 400)
+    menu_res = (300, 300)
     explosion_path = "./assets/explosion"
 
     main(menu_win=root, menu_size=menu_res, explode_win=explode_win, frames_path=explosion_path, screen_size=default_res)
